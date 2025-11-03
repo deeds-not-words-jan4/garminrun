@@ -3,7 +3,12 @@
     "allow": [
       "WebFetch(domain:developer.garmin.com)",
       "Bash(npm view:*)",
-      "Bash(npm install)"
+      "Bash(npm install)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: Garmin Activity Viewer\n\nGarminのアクティビティデータをWebブラウザで表示するアプリケーションを作成。\n\n機能:\n- Garmin Connectログイン機能\n- アクティビティ一覧表示\n- アクティビティ詳細表示（距離、時間、ペース、心拍数、カロリー）\n- レスポンシブデザイン\n\n技術スタック: Node.js, Express, HTML, CSS, JavaScript\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(gh:*)",
+      "Bash(npm start)",
+      "Bash(npx vercel:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

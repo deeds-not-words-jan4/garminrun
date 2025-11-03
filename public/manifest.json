@@ -1,0 +1,30 @@
+{
+  "name": "Garmin Activity Viewer",
+  "short_name": "Garmin App",
+  "description": "View your Garmin Connect activities",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0ABAB5",
+  "theme_color": "#0ABAB5",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/garmin.ico",
+      "sizes": "48x48 32x32 16x16",
+      "type": "image/x-icon",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

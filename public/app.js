@@ -1,3 +1,16 @@
+// Register Service Worker for PWA
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then((registration) => {
+                console.log('Service Worker registered:', registration);
+            })
+            .catch((error) => {
+                console.log('Service Worker registration failed:', error);
+            });
+    });
+}
+
 // DOM Elements
 const loginSection = document.getElementById('login-section');
 const activitiesSection = document.getElementById('activities-section');
@@ -142,10 +155,16 @@ function createActivityCard(activity) {
         minute: '2-digit'
     });
 
+    const effortLevel = calculateEffortLevel(activity);
+
     card.innerHTML = `
         <div class="activity-header">
             <div class="activity-title">${activity.activityName || 'アクティビティ'}</div>
             <div class="activity-type">${activity.activityType?.typeKey || 'その他'}</div>
+        </div>
+        <div class="effort-badge" style="background: ${effortLevel.color};">
+            <span class="effort-emoji">${effortLevel.emoji}</span>
+            <span class="effort-message">${effortLevel.message}</span>
         </div>
         <div class="activity-date">${dateStr}</div>
         <div class="activity-stats">
@@ -179,6 +198,9 @@ function createActivityCard(activity) {
 function formatDuration(seconds) {
     if (!seconds) return '0:00';
 
+    // Convert to integer to remove decimal places
+    seconds = Math.floor(seconds);
+
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
@@ -201,6 +223,52 @@ function calculatePace(distance, duration) {
     const paceSec = Math.floor((pace - paceMin) * 60);
 
     return `${paceMin}:${String(paceSec).padStart(2, '0')}`;
+}
+
+// Calculate effort level (がんばり具合)
+function calculateEffortLevel(activity) {
+    let score = 0;
+
+    // Distance score (0-30 points)
+    const distanceKm = (activity.distance || 0) / 1000;
+    if (distanceKm >= 15) score += 30;
+    else if (distanceKm >= 10) score += 25;
+    else if (distanceKm >= 5) score += 20;
+    else if (distanceKm >= 3) score += 15;
+    else if (distanceKm >= 1) score += 10;
+    else score += 5;
+
+    // Duration score (0-25 points)
+    const durationMin = (activity.duration || 0) / 60;
+    if (durationMin >= 90) score += 25;
+    else if (durationMin >= 60) score += 20;
+    else if (durationMin >= 45) score += 15;
+    else if (durationMin >= 30) score += 10;
+    else score += 5;
+
+    // Heart rate score (0-25 points)
+    const avgHR = activity.averageHR || 0;
+    if (avgHR >= 170) score += 25;
+    else if (avgHR >= 150) score += 20;
+    else if (avgHR >= 130) score += 15;
+    else if (avgHR >= 110) score += 10;
+    else if (avgHR > 0) score += 5;
+
+    // Pace score (0-20 points) - faster is better
+    if (distanceKm > 0 && durationMin > 0) {
+        const pace = durationMin / distanceKm; // min/km
+        if (pace <= 4.5) score += 20;
+        else if (pace <= 5.5) score += 15;
+        else if (pace <= 6.5) score += 10;
+        else if (pace <= 7.5) score += 5;
+    }
+
+    // Return emoji and message based on score
+    if (score >= 80) return { emoji: '🔥🔥🔥', message: '超頑張った！', color: '#FF3333' };
+    if (score >= 60) return { emoji: '🔥🔥', message: '頑張った！', color: '#FF6B6B' };
+    if (score >= 40) return { emoji: '💪', message: '良い感じ！', color: '#FF8E53' };
+    if (score >= 20) return { emoji: '😊', message: 'いい運動！', color: '#FFA500' };
+    return { emoji: '🙂', message: '軽め', color: '#FFD93D' };
 }
 
 // Show login section
