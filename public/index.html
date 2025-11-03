@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garmin Activity Viewer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Garmin Activity Viewer</h1>
+            <div id="user-info" style="display: none;">
+                <button id="logout-btn" class="btn btn-secondary">ログアウト</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Login Form -->
+            <div id="login-section" class="card">
+                <h2>Garmin Connect ログイン</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">メールアドレス:</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">パスワード:</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">ログイン</button>
+                </form>
+                <div id="login-error" class="error-message"></div>
+            </div>
+
+            <!-- Activities Section -->
+            <div id="activities-section" style="display: none;">
+                <div class="controls">
+                    <button id="refresh-btn" class="btn btn-primary">更新</button>
+                    <button id="load-more-btn" class="btn btn-secondary">さらに読み込む</button>
+                </div>
+
+                <div id="loading" class="loading" style="display: none;">
+                    読み込み中...
+                </div>
+
+                <div id="activities-list"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
