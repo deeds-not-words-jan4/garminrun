@@ -6,9 +6,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0ABAB5 0%, #81D8D0 50%, #48D1CC 100%);
-    background-size: 200% 200%;
-    animation: energyGradient 10s ease infinite;
+    background: #e8f5f5;
     min-height: 100vh;
     padding: 20px;
 }
