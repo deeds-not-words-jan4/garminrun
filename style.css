@@ -521,6 +521,71 @@ header h1 {
     50% { transform: scale(1.1); }
 }
 
+/* Monthly Summary Styles */
+#monthly-summary {
+    margin-top: 30px;
+}
+
+.summary-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(10, 186, 181, 0.2);
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    padding: 15px 20px;
+    border-radius: 15px;
+    border: 2px solid #0ABAB5;
+    box-shadow: 0 2px 8px rgba(10, 186, 181, 0.15);
+    transition: all 0.3s ease;
+    min-width: 160px;
+}
+
+.summary-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(10, 186, 181, 0.3);
+}
+
+.summary-icon {
+    font-size: 32px;
+    animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.summary-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.summary-distance {
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #0ABAB5, #48D1CC);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.summary-duration {
+    font-size: 14px;
+    color: #666;
+    font-weight: 600;
+}
+
 /* Modal Styles */
 .modal {
     position: fixed;
@@ -632,6 +697,32 @@ header h1 {
         max-width: 450px;
         max-height: 85vh;
     }
+
+    #monthly-summary {
+        margin-top: 20px;
+    }
+
+    .summary-container {
+        gap: 10px;
+        padding: 15px;
+    }
+
+    .summary-item {
+        padding: 12px 15px;
+        min-width: 140px;
+    }
+
+    .summary-icon {
+        font-size: 28px;
+    }
+
+    .summary-distance {
+        font-size: 18px;
+    }
+
+    .summary-duration {
+        font-size: 13px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -688,5 +779,32 @@ header h1 {
 
     .modal-close {
         font-size: 28px;
+    }
+
+    #monthly-summary {
+        margin-top: 15px;
+    }
+
+    .summary-container {
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .summary-item {
+        padding: 10px 12px;
+        min-width: 120px;
+        gap: 10px;
+    }
+
+    .summary-icon {
+        font-size: 24px;
+    }
+
+    .summary-distance {
+        font-size: 16px;
+    }
+
+    .summary-duration {
+        font-size: 12px;
     }
 }

@@ -24,6 +24,7 @@ const nextMonthBtn = document.getElementById('next-month-btn');
 const activityDetailModal = document.getElementById('activity-detail-modal');
 const activityDetail = document.getElementById('activity-detail');
 const modalClose = document.querySelector('.modal-close');
+const monthlySummary = document.getElementById('monthly-summary');
 
 let tokens = null; // Store OAuth tokens
 let allActivities = []; // Store all activities
@@ -189,6 +190,64 @@ function renderCalendar() {
         const dayEl = createCalendarDay(day, year, month + 1, true, activitiesByDate);
         calendarGrid.appendChild(dayEl);
     }
+
+    // Render monthly summary
+    renderMonthlySummary(year, month, activitiesByDate);
+}
+
+// Render monthly summary by activity type
+function renderMonthlySummary(year, month, activitiesByDate) {
+    // Calculate summary for current month
+    const summary = {};
+
+    // Get all dates in current month
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const dayActivities = activitiesByDate[dateStr] || [];
+
+        dayActivities.forEach(activity => {
+            const typeKey = activity.activityType?.typeKey || 'その他';
+
+            if (!summary[typeKey]) {
+                summary[typeKey] = {
+                    distance: 0,
+                    duration: 0,
+                    icon: getActivityIcon(typeKey)
+                };
+            }
+
+            summary[typeKey].distance += activity.distance || 0;
+            summary[typeKey].duration += activity.duration || 0;
+        });
+    }
+
+    // Generate HTML
+    let summaryHTML = '<div class="summary-container">';
+
+    // Sort by distance (descending)
+    const sortedTypes = Object.keys(summary).sort((a, b) => summary[b].distance - summary[a].distance);
+
+    sortedTypes.forEach(typeKey => {
+        const data = summary[typeKey];
+        const distanceKm = (data.distance / 1000).toFixed(1);
+        const durationFormatted = formatDuration(data.duration);
+
+        summaryHTML += `
+            <div class="summary-item">
+                <div class="summary-icon">${data.icon}</div>
+                <div class="summary-stats">
+                    <div class="summary-distance">${distanceKm} km</div>
+                    <div class="summary-duration">${durationFormatted}</div>
+                </div>
+            </div>
+        `;
+    });
+
+    summaryHTML += '</div>';
+
+    monthlySummary.innerHTML = summaryHTML;
 }
 
 // Create calendar day cell
