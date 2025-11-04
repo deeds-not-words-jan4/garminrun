@@ -23,7 +23,8 @@ module.exports = async (req, res) => {
       return res.status(401).json({ error: 'Tokens required' });
     }
 
-    const garminClient = new GarminConnect();
+    // Create client with empty credentials object
+    const garminClient = new GarminConnect({});
     console.log('GarminConnect client created');
 
     console.log('Loading tokens...');

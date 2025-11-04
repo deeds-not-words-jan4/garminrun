@@ -25,7 +25,8 @@ module.exports = async (req, res) => {
       return res.status(400).json({ error: 'Activity ID required' });
     }
 
-    const garminClient = new GarminConnect();
+    // Create client with empty credentials object
+    const garminClient = new GarminConnect({});
     garminClient.loadToken(tokens.oauth1, tokens.oauth2);
 
     const activity = await garminClient.getActivity({ activityId: id });
