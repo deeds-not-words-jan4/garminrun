@@ -25,16 +25,7 @@ body {
 }
 
 header {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 8px 20px rgba(10, 186, 181, 0.3);
-    border: 3px solid #0ABAB5;
-    animation: headerPulse 2s ease-in-out infinite;
+    display: none;
 }
 
 @keyframes headerPulse {

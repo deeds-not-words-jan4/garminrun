@@ -210,16 +210,21 @@ function createCalendarDay(day, year, month, isOtherMonth, activitiesByDate) {
     // Check if there are activities on this day
     const dayActivities = activitiesByDate[dateStr] || [];
     let totalDistance = 0;
+    let activityIcon = '';
 
     dayActivities.forEach(activity => {
         if (activity.distance) {
             totalDistance += activity.distance / 1000; // Convert to km
+            // Get icon for first activity with distance
+            if (!activityIcon && activity.activityType) {
+                activityIcon = getActivityIcon(activity.activityType.typeKey);
+            }
         }
     });
 
     dayEl.innerHTML = `
         <div class="calendar-day-number">${day}</div>
-        ${totalDistance > 0 ? `<div class="calendar-day-distance">${totalDistance.toFixed(1)}km</div>` : ''}
+        ${totalDistance > 0 ? `<div class="calendar-day-distance">${activityIcon} ${totalDistance.toFixed(1)}km</div>` : ''}
     `;
 
     if (totalDistance > 0) {
@@ -228,6 +233,20 @@ function createCalendarDay(day, year, month, isOtherMonth, activitiesByDate) {
     }
 
     return dayEl;
+}
+
+// Get activity icon based on type
+function getActivityIcon(typeKey) {
+    if (!typeKey) return '🏃';
+
+    const type = typeKey.toLowerCase();
+    if (type.includes('running') || type.includes('run')) return '🏃';
+    if (type.includes('walking') || type.includes('walk')) return '🚶';
+    if (type.includes('cycling') || type.includes('bike')) return '🚴';
+    if (type.includes('swimming') || type.includes('swim')) return '🏊';
+    if (type.includes('hiking')) return '🥾';
+
+    return '🏃'; // Default
 }
 
 // Show activity detail in modal

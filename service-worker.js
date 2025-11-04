@@ -1,4 +1,4 @@
-const CACHE_NAME = 'garmin-viewer-v10';
+const CACHE_NAME = 'garmin-viewer-v11';
 const urlsToCache = [
   '/',
   '/index.html',
